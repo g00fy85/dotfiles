@@ -8,7 +8,7 @@ set $mod Mod4
 # workspace_layout tabbed <stacking|tabbed>
 
 # Configure border style <normal|1pixel|pixel xx|none|pixel>
-new_window pixel 5
+new_window pixel 3
 new_float normal
 
 # Hide borders
@@ -27,7 +27,8 @@ font xft:URWGothic-Book 11
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec terminal
+#bindsym $mod+Return exec urxvt -fn "xft:Inconsolata Nerd Font:pixelsize=16"
+bindsym $mod+Return exec termite
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -37,7 +38,7 @@ bindsym $mod+Shift+q kill
 bindsym $mod+d exec --no-startup-id rofi -Show run
 
 # launch categorized menu
-#bindsym $mod+z exec --no-startup-id morc_menu
+bindsym $mod+z exec --no-startup-id morc_menu
 
 ################################################################################################
 ## sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
@@ -143,10 +144,10 @@ bindsym $mod+Ctrl+Left workspace prev
 # something like: set $ws1 1:mail
 #                 set $ws2 2:
 set $ws1 1: 
-set $ws2 2:
+set $ws2 2:
 set $ws3 3:
-set $ws4 4:
-set $ws5 5
+set $ws4 4:
+set $ws5 5:
 set $ws6 6
 set $ws7 7
 set $ws8 8:
@@ -182,7 +183,7 @@ bindsym $mod+Shift+7 move container to workspace $ws7; workspace $ws7
 bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
 
 # Open applications on specific workspaces
-assign [class="qutebrowser"] $ws1
+#assign [class="qutebrowser"] $ws1
 # assign [class="Pale moon"] $ws2
 # assign [class="Pcmanfm"] $ws3
 # assign [class="Skype"] $ws5
@@ -274,20 +275,21 @@ bindsym $mod+9 exec --no-startup-id i3lock-fancy #blurlock
 
 # Autostart applications
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id nitrogen --restore; sleep 1; compton -b
+#exec --no-startup-id nitrogen --restore; sleep 1; compton -b
 #exec --no-startup-id manjaro-hello
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
-exec --no-startup-id pamac-tray
-exec --no-startup-id clipit
+# exec --no-startup-id pamac-tray
+# exec --no-startup-id clipit
 # exec --no-startup-id blueman-applet
 # exec_always --no-startup-id sbxkb
-#exec --no-startup-id start_conky_maia
+# exec --no-startup-id start_conky_maia
 # exec --no-startup-id start_conky_green
 exec --no-startup-id xautolock -time 10 -locker i3lock-fancy #blurlock
-exec_always --no-startup-id ff-theme-util
+#exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
-exec qutebrowser
+#exec qutebrowser
+exec feh --bg-fill /home/g00fy/Pictures/wallpapers/Squeeze-Pg.-Background.jpg
 
 # Color palette used for the terminal ( ~/.Xresources file )
 # Colors are gathered based on the documentation:
@@ -301,8 +303,8 @@ exec qutebrowser
 # to:
 # background $term_background
 # Same logic applied to everything else.
-set_from_resource $term_background background
-set_from_resource $term_foreground foreground
+set_from_resource $bg              background
+set_from_resource $fg              foreground
 set_from_resource $term_color0     color0
 set_from_resource $term_color1     color1
 set_from_resource $term_color2     color2
@@ -322,8 +324,9 @@ set_from_resource $term_color15    color15
 
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 bar {
-	i3bar_command i3bar
+	i3bar_command i3bar 
 	status_command i3status
+        #status_command i3blocks
 	position top
 
 ## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
@@ -336,14 +339,14 @@ bar {
 	strip_workspace_numbers no
 
     colors {
-        background #283339
-        statusline #F9FAF9
-        separator  #454947
+        background $bg
+        statusline $fg
+        separator  $fg
 
 #                      border  backgr. text
-        focused_workspace  #F9FAF9 #F9FAF9 #292F34
-        active_workspace   #595B5B #353836 #FDF6E3
-        inactive_workspace #595B5B #283339 #EEE8D5
+        focused_workspace  $fg     $fg     $bg
+        active_workspace   $fg     $fg     $bg
+        inactive_workspace $bg     $bg     $fg
         binding_mode       #16a085 #2C2C2C #F9FAF9
         urgent_workspace   #16a085 #FDF6E3 #E5201D
     }
@@ -354,13 +357,13 @@ bindsym $mod+m bar mode toggle
 
 # Theme colors
 # class                   border  backgr. text    indic.   child_border
-  client.focused          #FFFFFF #FFFFFF #80FFF9 #FDF6E3
-  client.focused_inactive #2F3D44 #2F3D44 #1ABC9C #454948
-  client.unfocused        #2F3D44 #2F3D44 #1ABC9C #454948
-  client.urgent           #CB4B16 #FDF6E3 #1ABC9C #268BD2
-  client.placeholder      #000000 #0c0c0c #ffffff #000000 
+  client.focused          $bg     $bg     $fg     $bg      $fg
+  client.focused_inactive $bg     $bg     $fg     $bg      $bg
+  client.unfocused        $bg     $bg     $fg     $bg      
+  client.urgent           $bg     $bg     $fg     $bg      
+  client.placeholder      $bg     $bg     $fg     $bg      
 
-  client.background       #2B2C2B
+  client.background       $bg 
 
 #############################
 ### settings for i3-gaps: ###
